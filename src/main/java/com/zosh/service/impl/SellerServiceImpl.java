@@ -47,7 +47,7 @@ public class SellerServiceImpl implements SellerService {
         newSeller.setEmail(seller.getEmail());
         newSeller.setPickupAddress(savedAddress);
         newSeller.setSellerName(seller.getSellerName());
-        newSeller.setGSTIN(seller.getGSTIN());
+        newSeller.setKRAPIN(seller.getKRAPIN());
         newSeller.setRole(USER_ROLE.ROLE_SELLER);
         newSeller.setMobile(seller.getMobile());
 
@@ -110,7 +110,7 @@ public class SellerServiceImpl implements SellerService {
 
         if (seller.getBankDetails() != null
                 && seller.getBankDetails().getAccountHolderName() != null
-                && seller.getBankDetails().getIfscCode() != null
+                && seller.getBankDetails().getSwiftCode() != null
                 && seller.getBankDetails().getAccountNumber() != null
         ) {
 
@@ -120,8 +120,8 @@ public class SellerServiceImpl implements SellerService {
             existingSeller.getBankDetails().setAccountNumber(
                     seller.getBankDetails().getAccountNumber()
             );
-            existingSeller.getBankDetails().setIfscCode(
-                    seller.getBankDetails().getIfscCode()
+            existingSeller.getBankDetails().setSwiftCode(
+                    seller.getBankDetails().getSwiftCode()
             );
         }
         if (seller.getPickupAddress() != null
@@ -137,8 +137,8 @@ public class SellerServiceImpl implements SellerService {
             existingSeller.getPickupAddress().setMobile(seller.getPickupAddress().getMobile());
             existingSeller.getPickupAddress().setPinCode(seller.getPickupAddress().getPinCode());
         }
-        if (seller.getGSTIN() != null) {
-            existingSeller.setGSTIN(seller.getGSTIN());
+        if (seller.getKRAPIN() != null) {
+            existingSeller.setKRAPIN(seller.getKRAPIN());
         }
 
 
