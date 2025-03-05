@@ -1,18 +1,14 @@
-# Use the official OpenJDK 17 image as a base
-FROM maven:3.8.4-openjdk-17 AS build
+# Use OpenJDK 17 as base image
+FROM eclipse-temurin:17-jdk-alpine
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Add a volume to store logs
-VOLUME /tmp
+# Copy the JAR file
+COPY target/Ecommerce-multi-vendor-0.0.1-SNAPSHOT.jar app.jar
 
-# Copy the JAR file to the container
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+# Expose your application port (you're using 5454 in your app)
+EXPOSE 5454
 
-# Expose port 8080 (or your configured port)
-EXPOSE 8080
-
-# Run the Spring Boot app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run the application
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
