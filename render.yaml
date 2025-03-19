@@ -3,35 +3,16 @@ services:
     name: vendachain-backend
     env: docker
     plan: standard
-    region: oregon  # Choose the region closest to your users in Kenya
-    healthCheckPath: /actuator/health  # If you have Spring Actuator; otherwise, use a simple endpoint like /api/health
+    region: oregon
+    healthCheckPath: /actuator/health
     buildCommand: "./mvnw clean package -DskipTests"
-    # Remove the startCommand line
     envVars:
       - key: PORT
         value: 5454
-      - key: DB_HOST
-        value: ${vendachain-mysql.HOSTNAME}
-      - key: DB_PORT
-        value: ${vendachain-mysql.PORT}
-      - key: DB_NAME
-        value: ${vendachain-mysql.DATABASE}
-      - key: DB_USERNAME
-        value: ${vendachain-mysql.USERNAME}
-      - key: DB_PASSWORD
-        value: ${vendachain-mysql.PASSWORD}
-      - key: SPRING_MAIL_USERNAME
-        value: vendas@vendachain.com
-      - key: SPRING_MAIL_PASSWORD
-        sync: false  # Set this manually in the Render dashboard
-      - key: GEMINI_API_KEY
-        value: AIzaSyBZcDErbgcnnvnGX-mNSO3EhGBsLGQ4bCk
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-
-databases:
-  - type: mysql
-    name: vendachain-mysql
-    plan: free  # Use "starter" for more resources when ready to scale
-    version: "8"
-    ipAllowList: []  # Allow connections from all IPs
+      - key: SPRING_MAIL_USERNAME
+        value: vendas@vendachain.com
+      - key: GEMINI_API_KEY
+        value: AIzaSyBZcDErbgcnnvnGX-mNSO3EhGBsLGQ4bCk
+      # Database environment variables will be set manually after MySQL creation
