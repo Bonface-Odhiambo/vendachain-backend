@@ -11,8 +11,28 @@ services:
         value: 5454
       - key: SPRING_PROFILES_ACTIVE
         value: prod
+      - key: DATABASE_URL
+        fromDatabase:
+          name: vendachain-db
+          property: connectionString
+      - key: DB_USERNAME
+        fromDatabase:
+          name: vendachain-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: vendachain-db
+          property: password
+      - key: HIBERNATE_DIALECT
+        value: org.hibernate.dialect.PostgreSQLDialect
       - key: SPRING_MAIL_USERNAME
         value: vendas@vendachain.com
+      - key: SPRING_MAIL_PASSWORD
+        sync: false
       - key: GEMINI_API_KEY
         value: AIzaSyBZcDErbgcnnvnGX-mNSO3EhGBsLGQ4bCk
-      # Database environment variables will be set manually after MySQL creation
+
+databases:
+  - name: vendachain-db
+    databaseName: vendachain
+    plan: free
