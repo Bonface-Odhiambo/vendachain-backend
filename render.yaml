@@ -1,0 +1,56 @@
+services:
+  - type: web
+    name: vendachain-backend
+    env: docker
+    plan: standard
+    region: oregon  # Choose the region closest to your users in Kenya
+    healthCheckPath: /actuator/health  # If you have Spring Actuator; otherwise, use a simple endpoint like /api/health
+    buildCommand: "./mvnw clean package -DskipTests"
+    startCommand: "java -jar target/*.jar"
+    envVars:
+      - key: PORT
+        value: 5454
+      - key: DB_HOST
+        fromDatabase:
+          name: vendachain-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: vendachain-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: vendachain-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: vendachain-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: vendachain-db
+          property: password
+      - key: MPESA_CONSUMER_KEY
+        sync: false  # Set this manually in the Render dashboard
+      - key: MPESA_CONSUMER_SECRET
+        sync: false  # Set this manually in the Render dashboard
+      - key: MPESA_PASSKEY
+        sync: false  # Set this manually in the Render dashboard
+      - key: MPESA_SHORTCODE
+        sync: false  # Set this manually in the Render dashboard
+      - key: MPESA_CALLBACK_URL
+        value: "https://vendachain-backend.onrender.com/api/payments/mpesa/callback"
+      - key: SPRING_MAIL_USERNAME
+        value: vendas@vendachain.com
+      - key: SPRING_MAIL_PASSWORD
+        sync: false  # Set this manually in the Render dashboard
+      - key: GEMINI_API_KEY
+        value: AIzaSyBZcDErbgcnnvnGX-mNSO3EhGBsLGQ4bCk
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+
+databases:
+  - name: vendachain-db
+    plan: standard
+    databaseName: ecommerce_multi_vendor
+    user: vendachain_user
