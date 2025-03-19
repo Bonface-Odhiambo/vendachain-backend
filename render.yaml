@@ -6,7 +6,7 @@ services:
     region: oregon  # Choose the region closest to your users in Kenya
     healthCheckPath: /actuator/health  # If you have Spring Actuator; otherwise, use a simple endpoint like /api/health
     buildCommand: "./mvnw clean package -DskipTests"
-    startCommand: "java -jar target/*.jar"
+    # Remove the startCommand line
     envVars:
       - key: PORT
         value: 5454
@@ -30,16 +30,6 @@ services:
         fromDatabase:
           name: vendachain-db
           property: password
-      - key: MPESA_CONSUMER_KEY
-        sync: false  # Set this manually in the Render dashboard
-      - key: MPESA_CONSUMER_SECRET
-        sync: false  # Set this manually in the Render dashboard
-      - key: MPESA_PASSKEY
-        sync: false  # Set this manually in the Render dashboard
-      - key: MPESA_SHORTCODE
-        sync: false  # Set this manually in the Render dashboard
-      - key: MPESA_CALLBACK_URL
-        value: "https://vendachain-backend.onrender.com/api/payments/mpesa/callback"
       - key: SPRING_MAIL_USERNAME
         value: vendas@vendachain.com
       - key: SPRING_MAIL_PASSWORD
