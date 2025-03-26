@@ -1,14 +1,12 @@
-# Use OpenJDK 17 as base image
-FROM eclipse-temurin:17-jdk-alpine
-
-# Set working directory
+# Stage 1: Build the JAR
+FROM maven:3.8.5-openjdk-17 AS builder
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copy the JAR file
-COPY target/Ecommerce-multi-vendor-0.0.1-SNAPSHOT.jar app.jar
-
-# Expose your application port (you're using 5454 in your app)
+# Stage 2: Run the app
+FROM openjdk:17
+WORKDIR /app
+COPY --from=builder /app/target/Ecommerce-multi-vendor-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 5454
-
-# Run the application
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
